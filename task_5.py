@@ -21,7 +21,7 @@
 Сохраните результаты в файл <folder_name>_summary.json в той же папке, где запустили скрипт.
 """
 
-import os
+import os, json
 
 
 def scan_size(root_folder):
@@ -47,7 +47,11 @@ def scan_size(root_folder):
 
 
 if __name__ == '__main__':
-
-    for k, v in scan_size(os.getcwd()).items():
+    dct = scan_size(os.getcwd())
+    for k, v in dct.items():
         print(f"{k:12d}: {v}")
+    file_j = os.path.join(os.getcwd(), f"{os.path.split(os.getcwd())[1]}_summary.json")
+    with open(file_j, "w", encoding="utf-8") as f:
+        json.dump(dct, f)
+        print(f'Файл "{file_j}" записан')
     input("Press any key to exit")
